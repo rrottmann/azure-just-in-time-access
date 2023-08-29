@@ -1,11 +1,12 @@
 import os
 import uuid
+import random
 import requests
 import argparse
 
-def jit(vm, rg, sub, ip="0.0.0.0/0", port=22, ssl_verify=True, showmyip="https://ifconfig.me/ip"):
+def jit(vm, rg, sub, ip="0.0.0.0/0", port=22, ssl_verify=True, showmyip=["https://ipconfig.pw/ip", "https://ifconfig.me/ip", "https://ipinfo.io/ip", "https://ident.me/"]):
     if ip == None:
-        ip = requests.get(showmyip, verify=ssl_verify).text.strip()
+        ip = requests.get(random.choice(showmyip), verify=ssl_verify).text.strip()
     vm_details = os.popen(f'az vm show -g {rg} -n {vm} --subscription {sub} -o tsv --query "[id, location]"').read().split()
     vm_id = vm_details[0]
     location = vm_details[1]
