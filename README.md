@@ -3,10 +3,27 @@ Small Python script to request JIT-access for a virtual machine.
 
 ## Usage
 
+```
+pip install -r requirements.txt
+./jit.py --help
+usage: jit.py [-h] --vm VM --rg RG --sub SUB [--port PORT]
+
+JIT access for given VM in Azure
+
+optional arguments:
+  -h, --help   show this help message and exit
+  --vm VM      Name of the virtual machine
+  --rg RG      Name of the Resource Group
+  --sub SUB    ID of the Subscription
+  --port PORT  Port to open
+```
+
+### Example
 ```bash
 ./jit.py --vm myazurevm --rg myazurerg --sub d3ace655-9212-42db-83ca-ce031717d945
 ```
-### Output
+
+#### Output
 ```
 {
   "responses": [
