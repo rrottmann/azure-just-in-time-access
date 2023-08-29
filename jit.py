@@ -3,8 +3,9 @@ import uuid
 import requests
 import argparse
 
-def jit(vm, rg, sub, port=22, ssl_verify=True, showmyip="https://ifconfig.me/ip"):
-    ip = requests.get(showmyip, verify=ssl_verify).text.strip()
+def jit(vm, rg, sub, ip="0.0.0.0/0", port=22, ssl_verify=True, showmyip="https://ifconfig.me/ip"):
+    if ip == None:
+        ip = requests.get(showmyip, verify=ssl_verify).text.strip()
     vm_details = os.popen(f'az vm show -g {rg} -n {vm} --subscription {sub} -o tsv --query "[id, location]"').read().split()
     vm_id = vm_details[0]
     location = vm_details[1]
@@ -60,4 +61,4 @@ if __name__ == "__main__":
     # Set Azure Subscription
     os.system(f"az account set --subscription {args.sub}")
     # Request Just-In-Time-Access
-    jit(vm=args.vm, rg=args.rg, sub=args.sub, port=args.port)
+    jit(vm=args.vm, rg=args.rg, sub=args.sub, ip=None, port=args.port)
